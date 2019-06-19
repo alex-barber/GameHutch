@@ -3,7 +3,8 @@ import axios from 'axios';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
-import { Button } from 'antd';
+
+import { Table, Divider, Tag } from 'antd';
 
 export default class GameContainer extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class GameContainer extends Component {
   async componentDidMount() {
     try {
 
-      let games = await axios.get('/steam');
+      let games = await axios.get('/api/steam/allgames');
       // console.log(games.data.response.games[34]);
 
       this.setState({
@@ -28,17 +29,37 @@ export default class GameContainer extends Component {
     }
   }
 
+
+
+
   render() {
+    const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'Playtime',
+    dataIndex: 'playtime_forever',
+    key: 'playtime_forever',
+    render: text => <span >{parseInt(text/60)}</span>,
+  },
+
+];
     return (
         <div>
-        <Button>xxxx</Button>
+
 
     {this.state.steamGames.length ?
 
-        this.state.steamGames.map( game =>(
-            <div key={game.appid}>{game.name}</div>)
-        )
-
+        // this.state.steamGames.map( game =>(
+        //     <div key={game.appid}>{game.name}</div>)
+        // )
+      <div>
+        <h1> STEAM</h1>
+        <Table dataSource={this.state.steamGames} columns={columns} pagination={false} />
+      </div>
         :
 
         (<div>LOADING</div>)}
