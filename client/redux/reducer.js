@@ -10,11 +10,11 @@
 // export default dummyReducer
 
 
-import {steamReducer} from "./steam";
+import steamReducer from "./steam";
 import {combineReducers} from "redux";
 
 const appReducer= combineReducers({
-    steam: steamReducer
+    steamReducer
 })
 
 export default appReducer

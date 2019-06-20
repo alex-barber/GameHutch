@@ -6,23 +6,26 @@ const osmosis = require('osmosis');
 
 router.get('/test', async (req, res, next) => {
   try {
-    let test = [];
-    await osmosis
-      .get('https://store.steampowered.com/app/496460')
-      .find('.glance_tags')
-      .set({
-        tags: ['a[1]', 'a[2]', 'a[3]', 'a[4]', 'a[5]'],
-      })
-      .find(
-        '.responsive_apppage_details_left.game_details:first .block_content[1]:first .block_content_inner[1]:first .details_block[1]'
-      )
-      .set({
-        genre: ['a:before-sibling(div)'],
-      })
-      .data(item => test.push(item));
-
+    // let test = [];
+    // for (let i=0; i<5; i++) {
+    //   console.log(i)
+    //   await osmosis
+    //       .get('https://store.steampowered.com/app/496460')
+    //       .find('.glance_tags')
+    //       .set({
+    //         tags: ['a[1]', 'a[2]', 'a[3]', 'a[4]', 'a[5]'],
+    //       })
+    //       .find(
+    //           '.responsive_apppage_details_left.game_details:first .block_content[1]:first .block_content_inner[1]:first .details_block[1]'
+    //       )
+    //       .set({
+    //         genre: ['a:before-sibling(div)'],
+    //       })
+    //       .data(item => test.push(item));
+    // }
+    const test=await axios.get('http://steamspy.com/api.php?request=all')
     console.log(test);
-    res.send(test);
+    res.send(test.data);
   } catch (error) {
     next(error);
   }

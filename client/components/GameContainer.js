@@ -18,13 +18,13 @@ export class GameContainer extends Component {
 
   async componentDidMount() {
     try {
-      // let games = await axios.get('/api/steam/allgames');
-      // console.log(games.data.response.games[34]);
-
-
-
-      //GET TAGS & GENRE
-      // for (let i = 0; i < 4; i++) {
+     //  let games = await axios.get('/api/steam/allgames');
+     //  console.log(games.data.response.games[34]);
+     //
+     //
+     //
+     //  GET TAGS & GENRE
+     //  for (let i = 0; i < 4; i++) {
      // if (i%4===0){await new Promise(r => setTimeout(r, 1000))}
      //    let response = await axios.post('api/steam/singlegame/tags', {
      //      game: games.data.response.games[i],
@@ -38,14 +38,15 @@ export class GameContainer extends Component {
      //  });
      //
      //  console.log(this.state.steamGames);
-     //  this.props.getGames()
-     //  console.log(this.props)
+      this.props.getGames()
+      console.log(this.props)
     } catch (error) {
       console.error(error);
     }
   }
 
   render() {
+    console.log('PROPS', this.props.games)
     const columns = [
       {
         title: '',
@@ -73,14 +74,14 @@ export class GameContainer extends Component {
     ];
     return (
       <div>
-        {false ? (
+        {this.props.games[1] ? (
           // this.state.steamGames.map( game =>(
           //     <div key={game.appid}>{game.name}</div>)
           // )
           <div>
             <h1> STEAM</h1>
             <Table
-              dataSource={this.state.steamGames}
+              dataSource={this.props.games}
               columns={columns}
               pagination={false}
             />
@@ -95,7 +96,7 @@ export class GameContainer extends Component {
 
 const mapStateToProps = state =>{
   return{
-    games: state.games
+    games: state.steamReducer
   }
 }
 
