@@ -46,7 +46,7 @@ export class GameContainer extends Component {
   }
 
   render() {
-    console.log('PROPS', this.props.games)
+    console.log('PROPS', this.props)
     const columns = [
       {
         title: '',
@@ -74,14 +74,14 @@ export class GameContainer extends Component {
     ];
     return (
       <div>
-        {this.props.games[1] ? (
+        {this.props.games.games ? (
           // this.state.steamGames.map( game =>(
           //     <div key={game.appid}>{game.name}</div>)
           // )
           <div>
             <h1> STEAM</h1>
             <Table
-              dataSource={this.props.games}
+              dataSource={this.props.games.games}
               columns={columns}
               pagination={false}
             />
@@ -96,7 +96,7 @@ export class GameContainer extends Component {
 
 const mapStateToProps = state =>{
   return{
-    games: state.steamReducer
+    games: state.steam
   }
 }
 
