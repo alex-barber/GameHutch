@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import {connect} from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 
 import { Table, Divider, Tag } from 'antd';
 
-export default class GameContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      steamGames: [],
-    };
-  }
+import {getSteamGamesThunk} from "../redux/steam";
+
+export class GameContainer extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     steamGames: [],
+  //   };
+  // }
 
   async componentDidMount() {
     try {
-      let games = await axios.get('/api/steam/allgames');
+      // let games = await axios.get('/api/steam/allgames');
       // console.log(games.data.response.games[34]);
 
 
@@ -30,12 +32,14 @@ export default class GameContainer extends Component {
      //    games.data.response.games[i].genre=response.data.genre.split(', ')
      //    games.data.response.games[i].tags=response.data.tags
      //  }
-
-      this.setState({
-        steamGames: games.data.response.games,
-      });
-
-      console.log(this.state.steamGames);
+     //
+     //  this.setState({
+     //    steamGames: games.data.response.games,
+     //  });
+     //
+     //  console.log(this.state.steamGames);
+     //  this.props.getGames()
+     //  console.log(this.props)
     } catch (error) {
       console.error(error);
     }
@@ -69,7 +73,7 @@ export default class GameContainer extends Component {
     ];
     return (
       <div>
-        {this.state.steamGames.length ? (
+        {false ? (
           // this.state.steamGames.map( game =>(
           //     <div key={game.appid}>{game.name}</div>)
           // )
@@ -88,3 +92,18 @@ export default class GameContainer extends Component {
     );
   }
 }
+
+const mapStateToProps = state =>{
+  return{
+    games: state.games
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getGames: () => dispatch(getSteamGamesThunk())
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameContainer)

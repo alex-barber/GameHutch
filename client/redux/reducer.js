@@ -8,11 +8,13 @@
 // }
 //
 // export default dummyReducer
+
+
 import {steamReducer} from "./steam";
 import {combineReducers} from "redux";
 
 const appReducer= combineReducers({
-    steam: steamReducer()
+    steam: steamReducer
 })
 
 export default appReducer
