@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 
@@ -20,6 +21,8 @@ export default class GameContainer extends Component {
       let games = await axios.get('/api/steam/allgames');
       // console.log(games.data.response.games[34]);
 
+
+
       this.setState({
         steamGames: games.data.response.games
       })
@@ -34,6 +37,14 @@ export default class GameContainer extends Component {
 
   render() {
     const columns = [
+    {
+    title: '',
+    dataIndex: 'img_icon_url',
+    render:  (text, row) => <img src={`https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/${row.appid}/${text}.jpg`} />
+ },
+
+
+
   {
     title: 'Name',
     dataIndex: 'name',
