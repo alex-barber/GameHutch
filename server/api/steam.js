@@ -15,7 +15,9 @@ router.get('/test', async (req, res, next) => {
       .set({
 
         tags: ['a[1]', 'a[2]','a[3]','a[4]','a[5]']
-      })
+      }).find('.responsive_apppage_details_left.game_details:first .block_content[1]:first .block_content_inner[1]:first .details_block[1]').set({
+         genre: ['a:before-sibling(div)']
+       })
       .data(item => test.push(item))
 
 
