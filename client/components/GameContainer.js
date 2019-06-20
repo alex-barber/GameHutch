@@ -74,14 +74,14 @@ export class GameContainer extends Component {
     ];
     return (
       <div>
-        {this.props.games ? (
+        {this.props.games.games ? (
           // this.state.steamGames.map( game =>(
           //     <div key={game.appid}>{game.name}</div>)
           // )
           <div>
             <h1> STEAM</h1>
             <Table
-              dataSource={this.props.games}
+              dataSource={this.props.games.games}
               columns={columns}
               pagination={false}
             />

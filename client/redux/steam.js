@@ -23,7 +23,7 @@ export const getSteamGamesThunk = () => {
     try {
       const response = await axios.get('/api/steam/allgames');
       const games = response.data;
-      const action = getSteamGames(games.response.games);
+      const action = getSteamGames(games.response);
       dispatch(action);
     } catch (error) {
       console.error(error);
