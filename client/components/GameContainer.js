@@ -39,7 +39,9 @@ export class GameContainer extends Component {
      //
      //  console.log(this.state.steamGames);
       this.props.getGames()
-      console.log(this.props)
+
+
+      console.log(this.props.games)
     } catch (error) {
       console.error(error);
     }

@@ -37,8 +37,8 @@ router.get('/allgames', async (req, res, next) => {
       'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=6C9C42CBC99FA5784E1817CE02E9378B&steamid=76561197987568590&include_appinfo=1'
     );
 
-    //    for (let i = 0; i < 10; i++) {
-    // console.log(i)
+    //    for (let i = 0; i < games.data.response.games.length; i++) {
+    // // console.log(i)
     //      let crawledTags = [];
     //      await osmosis
     //        .get(`https://store.steampowered.com/app/${games.data.response.games[i].appid}`)
@@ -69,6 +69,7 @@ router.post('/singlegame/tags', async (req, res, next) => {
   // console.log('HITTING ROUTE', req.body);
   try {
     let game = req.body.game;
+    let id = req.body.id
 
     // let crawledTags = [];
     // await osmosis
@@ -86,10 +87,10 @@ router.post('/singlegame/tags', async (req, res, next) => {
     //   .data(item => crawledTags.push(item));
 
       let response = await axios.get(`http://steamspy.com/api.php?request=appdetails&appid=${game.appid}`)
+      // let response = await axios.get(`http://steamspy.com/api.php?request=appdetails&appid=730`)
 
-console.log(response.data)
 
-    res.send(response.data);
+    res.send([id, response.data.genre(split(', ')), response.data.tags ]);
   } catch (error) {
     next(error);
   }
