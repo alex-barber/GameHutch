@@ -18,7 +18,7 @@ export class GameContainer extends Component {
 
 
      //  console.log('in component props', this.props.games)
-           if (!this.props.games[0].genre) {
+           if (!this.props.games) {
              this.props.getGames()
            }
       // console.log('in component props', this.props.games)
