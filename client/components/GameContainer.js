@@ -11,44 +11,24 @@ import {getSteamGamesThunk} from "../redux/steam";
 export class GameContainer extends Component {
   // constructor(props) {
   //   super(props);
-  //   this.state = {
-  //     steamGames: [],
-  //   };
   // }
 
   async componentDidMount() {
     try {
-     //  let games = await axios.get('/api/steam/allgames');
-     //  console.log(games.data.response.games[34]);
-     //
-     //
-     //
-     //  GET TAGS & GENRE
-     //  for (let i = 0; i < 4; i++) {
-     // if (i%4===0){await new Promise(r => setTimeout(r, 1000))}
-     //    let response = await axios.post('api/steam/singlegame/tags', {
-     //      game: games.data.response.games[i],
-     //    });
-     //    games.data.response.games[i].genre=response.data.genre.split(', ')
-     //    games.data.response.games[i].tags=response.data.tags
-     //  }
-     //
-     //  this.setState({
-     //    steamGames: games.data.response.games,
-     //  });
-     //
-     //  console.log(this.state.steamGames);
-      this.props.getGames()
 
 
-      console.log(this.props.games)
+     //  console.log('in component props', this.props.games)
+           if (!this.props.games[0].genre) {
+             this.props.getGames()
+           }
+      // console.log('in component props', this.props.games)
     } catch (error) {
       console.error(error);
     }
   }
 
   render() {
-    console.log('PROPS', this.props)
+    // console.log('PROPS', this.props)
     const columns = [
       {
         title: '',
@@ -72,14 +52,33 @@ export class GameContainer extends Component {
         dataIndex: 'playtime_forever',
         key: 'playtime_forever',
         render: text => <span>{parseInt(text / 60)}</span>,
-      },
+      },  {
+    title: 'Tags',
+    key: 'tags',
+    dataIndex: 'genre',
+    render:  (tags,row) => row.genre ? (
+        console.log('yes'),
+      <span>
+        {tags.map(tag => {
+          let color = tag.length > 5 ? 'geekblue' : 'green';
+
+          return (
+            <Tag color={color} key={tag}>
+              {tag.toUpperCase()}
+            </Tag>
+          );
+        })}
+      </span>
+    ) :
+        // (console.log(row),<span></span>)
+        <span></span>
+        ,
+
+  }
     ];
     return (
       <div>
         {this.props.games.games ? (
-          // this.state.steamGames.map( game =>(
-          //     <div key={game.appid}>{game.name}</div>)
-          // )
           <div>
             <h1> STEAM</h1>
             <Table
