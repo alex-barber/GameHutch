@@ -23,8 +23,8 @@ export const steamReducer = (library = [], action) => {
     case ADD_TAGS:
 
 
-      console.log('IN ADDTAGS: ', action.game, Array.isArray(library), library);
-      console.log('ACTION: ', action.game, 'GAME: ', library);
+      // console.log('IN ADDTAGS: ', action.game, Array.isArray(library), library);
+      // console.log('ACTION: ', action.game, 'GAME: ', library);
 
 
       let index = action.game[0];
