@@ -18,10 +18,10 @@ export class GameContainer extends Component {
 
 
      //  console.log('in component props', this.props.games)
-           if (!this.props.games) {
+           if (!this.props.games[0]) {
              this.props.getGames()
            }
-      // console.log('in component props', this.props.games)
+      // console.log('in component props', (Object.values(this.props.games), this.props.games))
     } catch (error) {
       console.error(error);
     }
@@ -78,11 +78,11 @@ export class GameContainer extends Component {
     ];
     return (
       <div>
-        {this.props.games.games ? (
+        {this.props.games ? (
           <div>
             <h1> STEAM</h1>
             <Table
-              dataSource={this.props.games.games}
+              dataSource={Array.from(this.props.games)}
               columns={columns}
               pagination={false}
             />
