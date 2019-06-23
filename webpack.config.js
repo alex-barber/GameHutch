@@ -19,7 +19,7 @@ module.exports = {
       swDest: 'service-worker.js',
         runtimeCaching: [{
     urlPattern: new RegExp('http://localhost:4000/'),
-    handler: 'StaleWhileRevalidate'
+    handler: 'NetworkFirst'
   }]
     }),
   ],
