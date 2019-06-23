@@ -29,10 +29,23 @@ export  const columns = [
         title: 'tags',
         key: 'tags',
         dataIndex: 'tags',
-        render: (tag, row) =>(
+        render: (tags, row) =>(
 // console.log(row),
             row.tags ?
-           console.log(true) : console.log(false))}
+
+            <span>
+        {tags.map(tag => {
+          let color = tag.length > 5 ? 'geekblue' : 'green';
+
+          return (
+            <Tag color={color} key={tag}>
+              {tag.toUpperCase()}
+            </Tag>
+          );
+        })}
+      </span>
+
+                : false )}
 
     ]
 

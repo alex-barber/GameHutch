@@ -21,7 +21,7 @@ export class GameContainer extends Component {
 
   async componentDidMount() {
     try {
-      if (!this.props.games[0]) {
+      if (!this.props.games[1]) {
         console.log('Mount')
        await this.props.getGames();
 
@@ -34,7 +34,7 @@ export class GameContainer extends Component {
   }
 
   async handleClick(){
-
+console.log('yaa')
     try {
       // console.log(this.props.games)
       console.log('handleClick: before')
