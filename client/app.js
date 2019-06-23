@@ -1,4 +1,4 @@
-import'../public/style.css'
+// import'../public/style.css'
 
 import { render } from 'react-dom';
 import React from 'react';
@@ -12,9 +12,9 @@ import { PersistGate} from "redux-persist/integration/react";
 
 ReactDOM.render(
   <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      {/*<PersistGate loading={<Root />} persistor={persistor}>*/}
     <Root/>
-      </PersistGate>
+      {/*</PersistGate>*/}
   </Provider>,
   document.getElementById('app')
 );

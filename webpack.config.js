@@ -1,8 +1,16 @@
-const WorkboxPlugin = require('workbox-webpack-plugin');
-const path= require('path')
+const WorkboxPlugin = require('workbox-webpack-plugin'),
+      path= require('path'),
+      htmlPlugin = require ('html-webpack-plugin'),
+    {CleanWebpackPlugin} = require ('clean-webpack-plugin');
+
 module.exports = {
   entry: ['babel-polyfill', './client/app.js'], // assumes your entry point is the index.js in the root of your project folder
   plugins: [
+      new CleanWebpackPlugin(),
+      new htmlPlugin({
+        filename: 'index.html',
+        template: 'templates/index.html'
+      }),
     new WorkboxPlugin.GenerateSW({
       // these options encourage the ServiceWorkers to get in there fast
       // and not allow any straggling "old" SWs to hang around
@@ -16,7 +24,7 @@ module.exports = {
     }),
   ],
   output: {
-    path: path.join(__dirname,'public'), // assumes your bundle.js will also be in the root of your project folder
+    path: path.join(__dirname,'public'),
     filename: 'bundle.js',
   },
   mode: 'development',
