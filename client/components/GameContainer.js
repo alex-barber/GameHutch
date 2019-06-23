@@ -14,12 +14,17 @@ export class GameContainer extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this)
+    this.state= {
+      render: false
+    }
   }
 
   async componentDidMount() {
     try {
       if (!this.props.games[0]) {
+        console.log('Mount')
        await this.props.getGames();
+
       }
 
       // console.log('in component props', (Object.values(this.props.games), this.props.games))
@@ -31,30 +36,42 @@ export class GameContainer extends Component {
   async handleClick(){
 
     try {
-      console.log(this.props.games)
+      // console.log(this.props.games)
+      console.log('handleClick: before')
 
-      this.props.getTags(this.props.games)
+     await this.props.getTags(this.props.games)
+      console.log('handleClick: after')
+      this.setState({
+        render: true
+      })
     }catch(error){
       console.error(error)
     }
   }
 
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return this.state==nextState
+  // }
+
   render() {
     // console.log('PROPS', this.props)
-
+ let renderArray= (Object.values(this.props.games));
+ console.log('BEFORE: ')
     return (
-      console.log('RENDER'),
+
+      console.log('RENDER', renderArray),
       (
         <div>
 
           <h1> STEAM</h1>
           <div>
-            <Button onClick={this.handleClick}>Get Tags</Button>
+            <Button onClick={() =>this.handleClick()}>Get Tags</Button>
           </div>
           {this.props.games ? (
             <div>
               <Table
-                dataSource={Array.from(this.props.games)}
+                dataSource={renderArray}
                 columns={columns}
                 pagination={false}
               />

@@ -30,7 +30,7 @@ export  const columns = [
         key: 'tags',
         dataIndex: 'tags',
         render: (tag, row) =>(
-
+// console.log(row),
             row.tags ?
            console.log(true) : console.log(false))}
 

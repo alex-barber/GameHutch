@@ -17,32 +17,26 @@ export const addTags = game => ({
 export const steamReducer = (library = [], action) => {
   switch (action.type) {
     case GET_STEAM_GAMES:
-      console.log('IN GET: ','action payload:', Array.isArray(action.games),'store: ', Array.isArray(library))
 
       return action.games;
     case ADD_TAGS:
+      const index = action.game[0];
 
-
-      // console.log('IN ADDTAGS: ', action.game, Array.isArray(library), library);
-      // console.log('ACTION: ', action.game, 'GAME: ', library);
-
-
-      let index = action.game[0];
-
-      console.log(library[index], index, library)
+      console.log(library[index], index, library);
 
       if (library[index]) {
-        console.log('adding tags')
-        //  let copy ={...library};
-        // copy
-        library[index].genre= action.game[1]
-        library[index].tags=action.game[2]
-        return library
+        console.log('adding tags');
+
+        return {
+          ...library,
+          [index]: {
+            ...library[index],
+            tags: action.game[2],
+          },
+        };
+      } else {
+        return library;
       }
-
-
-      else{
-      return library;}
 
     default:
       return library;
@@ -56,53 +50,38 @@ export const getSteamGamesThunk = () => {
       const games = response.data.response.games;
       const action = getSteamGames(games);
       dispatch(action);
-
-      //TODO: BREAK OUT INTO BUTTON:
-
-      // for (let i = 0; i < 2; i++) {
-      //   let game = games[i];
-      //   let tags = await axios.post('api/steam/singlegame/tags', {
-      //     game: game,
-      //     index: i,
-      //   });
-      //   // console.log(tags.data)
-      //   // console.log('THUNK: ', i);
-      //
-      //   let action2 = addTags(tags.data);
-      //   dispatch(action2);
-      // }
     } catch (error) {
       console.error(error);
     }
   };
 };
 
-export const addTagsThunk = (games) => {
-  return async dispatch =>{
-    try{
+export const addTagsThunk = games => {
+  return async dispatch => {
+    try {
 
+        for (let i = 0; i < 1; i++) {
+          let game = games[i];
+          let tags = await axios.post('api/steam/singlegame/tags', {
+            game: game,
+            index: i,
+          });
 
-            for (let i = 0; i < 2; i++) {
-        let game = games[i];
-        let tags = await axios.post('api/steam/singlegame/tags', {
-          game: game,
-          index: i,
-        });
         // console.log(tags.data)
         // console.log('THUNK: ', i);
 
         let action2 = addTags(tags.data);
         dispatch(action2);
-      }
+      };
 
       // let response = await axios.post('api/steam/singlegame/tags', {
       //     game: game
       //   });
-    //  games.data.response.games[i],
-    }catch(error){
-      console.error(error)
+      //  games.data.response.games[i],
+    } catch (error) {
+      console.error(error);
     }
-  }
-}
+  };
+};
 
 export default steamReducer;
