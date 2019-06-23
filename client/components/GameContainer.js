@@ -10,6 +10,8 @@ import { getSteamGamesThunk } from '../redux/steam';
 import { Button } from 'antd';
 import {addTagsThunk} from "../redux/steam";
 
+
+
 export class GameContainer extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +36,6 @@ export class GameContainer extends Component {
   }
 
   async handleClick(){
-console.log('yaa')
     try {
       // console.log(this.props.games)
       console.log('handleClick: before')
@@ -70,11 +71,15 @@ console.log('yaa')
           </div>
           {this.props.games ? (
             <div>
-              <Table
+               <Table
+                   rowKey = {record => record.appid}
                 dataSource={renderArray}
                 columns={columns}
                 pagination={false}
+                bordered
+                title={()=>'STEAM'}
               />
+
             </div>
           ) : (
             <div>LOADING</div>

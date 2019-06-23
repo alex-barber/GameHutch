@@ -60,7 +60,7 @@ export const addTagsThunk = games => {
   return async dispatch => {
     try {
 
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < Object.values(games).length; i++) {
           let game = games[i];
           let tags = await axios.post('api/steam/singlegame/tags', {
             game: game,

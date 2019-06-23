@@ -34,8 +34,8 @@ const osmosis = require('osmosis');
 router.get('/allgames', async (req, res, next) => {
   try {
     let games = await axios.get(
-      // 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=E110F19FDAB0059A76CE84CB10E2AD94&steamid=76561197987568590&include_appinfo=1'
-        'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=E110F19FDAB0059A76CE84CB10E2AD94&steamid=76561197960434622&include_appinfo=1&format=json'
+      'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=E110F19FDAB0059A76CE84CB10E2AD94&steamid=76561197987568590&include_appinfo=1'
+      //   'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=E110F19FDAB0059A76CE84CB10E2AD94&steamid=76561197960434622&include_appinfo=1&format=json'
 
     );
     res.send(games.data);

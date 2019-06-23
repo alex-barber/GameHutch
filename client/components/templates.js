@@ -1,5 +1,7 @@
 import {Tag} from "antd";
 import React from "react";
+import _ from 'lodash'
+
 
 export  const columns = [
       // {
@@ -29,10 +31,10 @@ export  const columns = [
         title: 'tags',
         key: 'tags',
         dataIndex: 'tags',
-        render: (tags, row) =>(
-// console.log(row),
-            row.tags ?
 
+
+        render: (tags, row, table) =>(
+            row.tags ?
             <span>
         {tags.map(tag => {
           let color = tag.length > 5 ? 'geekblue' : 'green';
@@ -45,7 +47,21 @@ export  const columns = [
         })}
       </span>
 
-                : false )}
+                : false ),
+
+            filters: [
+              {
+                  text: 'Rogue-like',
+              value: ['Rogue-like', 'Pixel Graphics']
+              },
+                {
+                    text: 'Pixel Graphics',
+                    value: 'Pixel Graphics'
+                }
+          ],
+
+          onFilter: (value,record) =>(console.log(value, record.tags, _.difference(value,record.tags).length===0), record.tags && _.difference(value,record.tags).length===0),
+      }
 
     ]
 
