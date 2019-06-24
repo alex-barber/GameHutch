@@ -22,16 +22,17 @@ export const steamReducer = (library = [], action) => {
     case ADD_TAGS:
       const index = action.game[0];
 
-      console.log(library[index], index, library);
+      // console.log(library[index], index, library);
 
       if (library[index]) {
-        console.log('adding tags');
+        // console.log('adding tags');
 
         return {
           ...library,
           [index]: {
             ...library[index],
             tags: action.game[2],
+            genre: action.game[1]
           },
         };
       } else {
@@ -60,24 +61,16 @@ export const addTagsThunk = games => {
   return async dispatch => {
     try {
 
-        for (let i = 0; i < Object.values(games).length; i++) {
+        for (let i = 0; i < Object.values(games).length-1; i++) {
           let game = games[i];
           let tags = await axios.post('api/steam/singlegame/tags', {
             game: game,
             index: i,
           });
-
-        // console.log(tags.data)
-        // console.log('THUNK: ', i);
-
         let action2 = addTags(tags.data);
         dispatch(action2);
       };
 
-      // let response = await axios.post('api/steam/singlegame/tags', {
-      //     game: game
-      //   });
-      //  games.data.response.games[i],
     } catch (error) {
       console.error(error);
     }
