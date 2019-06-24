@@ -22,3 +22,5 @@ export class Root extends React.Component{
         )
     }
 }
+
+export default connect(null)(Root)

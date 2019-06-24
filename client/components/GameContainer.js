@@ -1,111 +1,111 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
-
+import { columns } from './templates';
 import { Table, Divider, Tag } from 'antd';
 
-import {getSteamGamesThunk} from "../redux/steam";
+import { getSteamGamesThunk } from '../redux/steam';
+import { Button } from 'antd';
+import { addTagsThunk } from '../redux/steam';
+
+import TagFilter from './TagFilter'
 
 export class GameContainer extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+    this.handleClickTags = this.handleClickTags.bind(this);
+    this.handleClickGames = this.handleClickGames.bind(this);
+    this.state = {
+      render: false,
+    };
+  }
 
-  async componentDidMount() {
+  async handleClickTags() {
     try {
+      await this.props.getTags(this.props.games);
+      this.setState({
+        render: true,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-
-     //  console.log('in component props', this.props.games)
-           if (!this.props.games) {
-             this.props.getGames()
-           }
-      // console.log('in component props', this.props.games)
+  async handleClickGames() {
+    try {
+      await this.props.getGames();
+      this.setState({
+        render: true,
+      });
     } catch (error) {
       console.error(error);
     }
   }
 
   render() {
-    // console.log('PROPS', this.props)
-    const columns = [
-      {
-        title: '',
-        dataIndex: 'img_icon_url',
-        render: (text, row) => (
-          <img
-            src={`https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/${
-              row.appid
-            }/${text}.jpg`}
-          />
-        ),
-      },
-
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-      },
-      {
-        title: 'Playtime',
-        dataIndex: 'playtime_forever',
-        key: 'playtime_forever',
-        render: text => <span>{parseInt(text / 60)}</span>,
-      },  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'genre',
-    render:  (tags,row) => row.genre ? (
-        console.log('yes'),
-      <span>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </span>
-    ) :
-        // (console.log(row),<span></span>)
-        <span></span>
-        ,
-
-  }
-    ];
+    let renderArray = Object.values(this.props.games);
+    // console.log('BEFORE: ');
     return (
-      <div>
-        {this.props.games.games ? (
-          <div>
-            <h1> STEAM</h1>
-            <Table
-              dataSource={this.props.games.games}
-              columns={columns}
-              pagination={false}
-            />
-          </div>
-        ) : (
-          <div>LOADING</div>
-        )}
-      </div>
+      // console.log('RENDER', renderArray),
+      (
+        <div>
+
+          {this.props.games ? (
+            <div>
+              <Table
+
+                rowKey={record => record.appid}
+                dataSource={renderArray}
+                columns={columns}
+
+
+                pagination={false}
+                bordered
+                title={() => (
+                    <div display='flex' justify-content= 'space-between'>
+                      <div>
+                        <h3>STEAM</h3>
+                      </div>
+                      <div>
+                    <Button onClick={() => this.handleClickGames()}>
+                      Get Games{' '}
+                    </Button>
+
+
+                    <Button onClick={() => this.handleClickTags()}>
+                      Get Tags
+                    </Button>
+                      </div>
+
+                    </div>
+                )}
+              />
+            </div>
+          ) : (
+            <div>LOADING</div>
+          )}
+        </div>
+      )
     );
   }
 }
 
-const mapStateToProps = state =>{
-  return{
-    games: state.steam
-  }
-}
+const mapStateToProps = state => {
+  return {
+    games: state.steam,
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    getGames: () => dispatch(getSteamGamesThunk())
-  }
-}
+    getGames: () => dispatch(getSteamGamesThunk()),
+    getTags: games => dispatch(addTagsThunk(games)),
+  };
+};
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(GameContainer)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GameContainer);
